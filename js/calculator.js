@@ -83,5 +83,7 @@ document.getElementById("submitButton").onclick = function displayInformation(){
 	else{
 		document.getElementById("info" +info).className = "lossed";
 	}
+	info++;
+	document.getElementById("info" +info).innerHTML = "Learn more by clicking <a target="+ "_blank"+" href=" + "https://coinmarketcap.com/currencies/" +cObj[coinMatch].name +" > here</a>.";
 
 };
