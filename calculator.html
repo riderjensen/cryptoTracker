@@ -24,11 +24,11 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-          <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
-        </li>
         <li class="nav-item">
-          <a class="nav-link" href="calculator.html">Calculator</a>
+          <a class="nav-link" href="index.html">Home </a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="calculator.html">Calculator <span class="sr-only">(current)</span></a>
         </li>
       </ul>
     </div>
@@ -37,24 +37,52 @@
   <!-- Body -->
   <body>
     <div class="jumbotron container">
-      <h1 class="display-4">Your Crypto Tracker</h1>
-      <p class="lead">May the gains be ever in your favor.</p>
+      <h1 class="display-4">Your Crypto Calculator</h1>
+      <p class="lead">Check how much of a certain coin costs.</p>
       <hr class="my-4">
-      <p>Please note all increases and decreases in coin price (notated by the arrows to the left of current price) are checked against the trading price of an hour previous. Visit our calculator page to view how much the coin has gained or lost in both 24 hours and 7 days.</p>
+      <p>Enter in either a symbol or the name of the coin you are looking for. You can then enter an amount to see how much it would cost to buy. Alternatively, you can not enter in a coin amount and just see statistics about that coin.</p>
     </div>
     <div id="content" class="container">
-      <h1>Eric</h1>
-      <div id="ericContent" class="row">
-          <div id="losses" class="col-md-6">
-          </div>
-        <div id="totalPrice" class="col-md-6">
-        </div>
+      <div class="row">
+        <form id="form">
+          <fieldset>
+            <legend><span>Cryptocurrency Selection</span></legend>
+            <input type="text" name="currencySelect" list="coins" id="coinSelection" required>
+            <datalist id="coins"> 
+            </datalist>
+          </fieldset>
+          <fieldset>
+            <legend><span>Number Of Coins</span></legend>
+            <input type="Number" name="coinAmount" id="coinNumber">
+          </fieldset>
+        </form>
       </div>
-      <h1>Rider</h1>
-      <div id="riderContent" class="row">
-        <div id="riderLosses" class="col-md-6">
+      <div class="row">
+        <div class="col-md-4 col-lg-5 col-sm-1 col-1">
         </div>
-        <div id="riderTotalPrice" class="col-md-6">
+        <div class="col-md-2 col-lg-1 col-sm-5 col-5">
+          <input type="button" name="submitButton" id="submitButton" value="Submit">
+        </div>
+        <div class="col-md-2 col-lg-1 col-sm-5 col-5">
+        <input type="button" name="clearButton" id="clearButton" value="Clear">
+        </div>
+        <div class="col-md-4 col-lg-5 col-sm-1 col-1">
+            
+          </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6" id="coinsInformation">
+          
+          <p id="info1"></p>
+          <p id="info2"></p>
+          <p id="info3"></p>
+          <p id="info4"></p>
+          <p id="info5"></p>
+          <p id="info6"></p>
+          <p id="info7"></p>
+        </div>
+        <div class="col-md-6" id="coinsWorth">
+          <p id="totalCostOnPage"></p>
         </div>
       </div>
     </div>
@@ -65,6 +93,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
-    <script type="text/javascript" src="js/main.js"></script>
+    <script type="text/javascript" src="js/calculator.js"></script>
   </body>
 </html>

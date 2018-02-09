@@ -7,3 +7,33 @@
 .lossed{
 	color: red;
 }
+form{
+	margin: auto;
+	text-align: center;
+}
+span{
+	padding: 10px;
+}
+input{
+	border-radius: 25px;
+	width: 300px;
+}
+input#submitButton{
+	border-radius: 10px;
+	margin: auto;
+	width: 75px;
+	height: 35px;
+}
+input#clearButton{
+	border-radius: 10px;
+	margin: auto;
+	width: 75px;
+	height: 35px;
+}
+fieldset{
+	float: left;
+	padding: 30px;
+}
+#coinsInformation{
+	padding: 20px;
+}

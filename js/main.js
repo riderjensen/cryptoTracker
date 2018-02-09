@@ -35,8 +35,6 @@ window.onload = function loadAPI(){
 crypotcurrencyRequest.onload = function(){
 	if(crypotcurrencyRequest.status == 200){
 		cObj = JSON.parse(crypotcurrencyRequest.responseText);
-		console.log(cObj);
-		console.log(cObj[1]);
 		forLoop("XRB", "VEN", "DENT", "POE", "ericContent", "e", ericArrayName, ericArrayPrice);
 		forLoop("XRB", "VEN", "DENT", "POE", "riderContent", "r", riderArrayName, riderArrayPrice);
 		ericCalculateNumbers();
@@ -50,28 +48,28 @@ function ericCalculateNumbers(){
 		switch(ericArrayName[i]){
 			case "VeChain":
 				var venWorth = ERIC_VEN * ericArrayPrice[i];
-				var venNode = document.createTextNode("Holdings Worth: $" +venWorth.toFixed(2));
+				var venNode = document.createTextNode("Holdings: $" +venWorth.toFixed(2));
 				var venHead = document.getElementById("VENe");
 				pNodeCreate(venNode, venHead);
 				totalPrice += venWorth;
 				break;
 			case "Nano":
 				var nanoWorth = ERIC_XRB * ericArrayPrice[i];
-				var nanoNode = document.createTextNode("Holdings Worth: $" +nanoWorth.toFixed(2));
+				var nanoNode = document.createTextNode("Holdings: $" +nanoWorth.toFixed(2));
 				var xrbHead = document.getElementById("XRBe");
 				pNodeCreate(nanoNode, xrbHead);
 				totalPrice += nanoWorth;
 				break;
 			case "Dent":
 				var dentWorth = ERIC_DENT * ericArrayPrice[i];
-				var dentNode = document.createTextNode("Holdings Worth: $" +dentWorth.toFixed(2));
+				var dentNode = document.createTextNode("Holdings: $" +dentWorth.toFixed(2));
 				var dentHead = document.getElementById("DENTe");
 				pNodeCreate(dentNode, dentHead);
 				totalPrice += dentWorth;
 				break;
 			case "Po.et":
 				var poeWorth = ERIC_POE * ericArrayPrice[i];
-				var poeNode = document.createTextNode("Holdings Worth: $" +poeWorth.toFixed(2));
+				var poeNode = document.createTextNode("Holdings: $" +poeWorth.toFixed(2));
 				var poeHead = document.getElementById("POEe");
 				pNodeCreate(poeNode, poeHead);
 				totalPrice += poeWorth;
@@ -106,28 +104,28 @@ function riderCalculateNumbers(){
 		switch(riderArrayName[i]){
 			case "VeChain":
 				var venWorth = ERIC_VEN * riderArrayPrice[i];
-				var venNode = document.createTextNode("Holdings Worth: $" +venWorth.toFixed(2));
+				var venNode = document.createTextNode("Holdings: $" +venWorth.toFixed(2));
 				var venHead = document.getElementById("VENr");
 				pNodeCreate(venNode, venHead);
 				totalPrice += venWorth;
 				break;
 			case "Nano":
 				var nanoWorth = ERIC_XRB * riderArrayPrice[i];
-				var nanoNode = document.createTextNode("Holdings Worth: $" +nanoWorth.toFixed(2));
+				var nanoNode = document.createTextNode("Holdings: $" +nanoWorth.toFixed(2));
 				var xrbHead = document.getElementById("XRBr");
 				pNodeCreate(nanoNode, xrbHead);
 				totalPrice += nanoWorth;
 				break;
 			case "Dent":
 				var dentWorth = ERIC_DENT * riderArrayPrice[i];
-				var dentNode = document.createTextNode("Holdings Worth: $" +dentWorth.toFixed(2));
+				var dentNode = document.createTextNode("Holdings: $" +dentWorth.toFixed(2));
 				var dentHead = document.getElementById("DENTr");
 				pNodeCreate(dentNode, dentHead);
 				totalPrice += dentWorth;
 				break;
 			case "Po.et":
 				var poeWorth = ERIC_POE * riderArrayPrice[i];
-				var poeNode = document.createTextNode("Holdings Worth: $" +poeWorth.toFixed(2));
+				var poeNode = document.createTextNode("Holdings: $" +poeWorth.toFixed(2));
 				var poeHead = document.getElementById("POEr");
 				pNodeCreate(poeNode, poeHead);
 				totalPrice += poeWorth;
@@ -181,26 +179,39 @@ function forLoop(sym1, sym2, sym3, sym4, content, letter, arrayName, arrayPrice)
 	for (var i = 0; i < cObj.length; i++) {
 			if (cObj[i].symbol == sym1 || cObj[i].symbol == sym2 || cObj[i].symbol == sym3 || cObj[i].symbol == sym4) {
 
-				var riderPrice = cObj[i].price_usd;
-				var riderName = cObj[i].name;
-				arrayPrice[arrayCount] = riderPrice;
-				arrayName[arrayCount] = riderName;
+				var price = cObj[i].price_usd;
+				var name = cObj[i].name;
+				arrayPrice[arrayCount] = price;
+				arrayName[arrayCount] = name;
 				arrayCount++;
-				var riderNameNode = document.createTextNode(cObj[i].name);
-				var riderNameTag = document.createElement("H3");
+				var nameNode = document.createTextNode(cObj[i].name);
+				var nameTag = document.createElement("H4");
 				
-				var riderPriceNode = document.createTextNode("Current Price: $" +cObj[i].price_usd);
-				var riderPriceTag = document.createElement("p");
-				riderPriceTag.setAttribute("class", "cryptoPrice");
-				var riderOnPage = document.getElementById(content);
-				var riderExtraDiv = document.createElement("div");
-				riderExtraDiv.setAttribute("id", cObj[i].symbol + letter);
+				var priceNode = document.createTextNode(" Current Price: $" +cObj[i].price_usd);
+				var priceTag = document.createElement("p");
+				priceTag.setAttribute("class", "cryptoPrice");
 
-				riderNameTag.appendChild(riderNameNode);
-				riderPriceTag.appendChild(riderPriceNode);
-				riderExtraDiv.appendChild(riderNameTag);
-				riderExtraDiv.appendChild(riderPriceTag);
-				riderOnPage.appendChild(riderExtraDiv);
+				var iconTag = document.createElement("i");
+				if(cObj[i].percent_change_1h >= 0){
+					iconTag.setAttribute("class", "fas fa-chevron-up gained");
+				}
+				else if(cObj[i].percent_change_1h < 0){
+					iconTag.setAttribute("class", "fas fa-chevron-down lossed");
+				}
+
+
+				var onPage = document.getElementById(content);
+				var extraDiv = document.createElement("div");
+				extraDiv.setAttribute("id", cObj[i].symbol + letter);
+				extraDiv.setAttribute("class", "col-lg-3 col-md-6 col-sm-12");
+
+
+				nameTag.appendChild(nameNode);
+				priceTag.appendChild(iconTag);
+				priceTag.appendChild(priceNode);
+				extraDiv.appendChild(nameTag);
+				extraDiv.appendChild(priceTag);
+				onPage.appendChild(extraDiv);
 			}
 			
 		}
