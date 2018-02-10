@@ -15,6 +15,10 @@ var ericArrayName = [];
 var arrayCount = 0;
 
 var RIDER_INIT = 1000;
+var RIDER_XRP = 119.776;
+var RIDER_VEN = 32.967;
+var RIDER_ADA = 292.642;
+var RIDER_POE = 1868.13;
 
 var riderArrayPrice = [];
 var riderArrayName = [];
@@ -36,7 +40,7 @@ crypotcurrencyRequest.onload = function(){
 	if(crypotcurrencyRequest.status == 200){
 		cObj = JSON.parse(crypotcurrencyRequest.responseText);
 		forLoop("XRB", "VEN", "DENT", "POE", "ericContent", "e", ericArrayName, ericArrayPrice);
-		forLoop("XRB", "VEN", "DENT", "POE", "riderContent", "r", riderArrayName, riderArrayPrice);
+		forLoop("XRP", "VEN", "ADA", "POE", "riderContent", "r", riderArrayName, riderArrayPrice);
 		ericCalculateNumbers();
 		riderCalculateNumbers();
 	}
@@ -103,28 +107,28 @@ function riderCalculateNumbers(){
 	for (var i = 0; i < riderArrayName.length; i++) {
 		switch(riderArrayName[i]){
 			case "VeChain":
-				var venWorth = ERIC_VEN * riderArrayPrice[i];
+				var venWorth = RIDER_VEN * riderArrayPrice[i];
 				var venNode = document.createTextNode("Holdings: $" +venWorth.toFixed(2));
 				var venHead = document.getElementById("VENr");
 				pNodeCreate(venNode, venHead);
 				totalPrice += venWorth;
 				break;
-			case "Nano":
-				var nanoWorth = ERIC_XRB * riderArrayPrice[i];
+			case "Ripple":
+				var nanoWorth = RIDER_XRP * riderArrayPrice[i];
 				var nanoNode = document.createTextNode("Holdings: $" +nanoWorth.toFixed(2));
-				var xrbHead = document.getElementById("XRBr");
+				var xrbHead = document.getElementById("XRPr");
 				pNodeCreate(nanoNode, xrbHead);
 				totalPrice += nanoWorth;
 				break;
-			case "Dent":
-				var dentWorth = ERIC_DENT * riderArrayPrice[i];
+			case "Cardano":
+				var dentWorth = RIDER_ADA * riderArrayPrice[i];
 				var dentNode = document.createTextNode("Holdings: $" +dentWorth.toFixed(2));
-				var dentHead = document.getElementById("DENTr");
+				var dentHead = document.getElementById("ADAr");
 				pNodeCreate(dentNode, dentHead);
 				totalPrice += dentWorth;
 				break;
 			case "Po.et":
-				var poeWorth = ERIC_POE * riderArrayPrice[i];
+				var poeWorth = RIDER_POE * riderArrayPrice[i];
 				var poeNode = document.createTextNode("Holdings: $" +poeWorth.toFixed(2));
 				var poeHead = document.getElementById("POEr");
 				pNodeCreate(poeNode, poeHead);
