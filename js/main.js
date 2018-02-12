@@ -11,6 +11,8 @@ var ERIC_DENT = 32358.6963126;
 
 var ericArrayPrice = [];
 var ericArrayName = [];
+//This is a set order based on total market cap value (may need to be adjusted in the future)- VEN, XRB, DENT, and POE
+var ericPurchasePrices = [5.53, 17.62, 0.05, 0.11];
 
 var arrayCount = 0;
 
@@ -22,6 +24,8 @@ var RIDER_POE = 1868.13;
 
 var riderArrayPrice = [];
 var riderArrayName = [];
+//This is a set order based on total market cap value (may need to be adjusted in the future)- XRP, ADA, VEN, and POE
+var riderPurchasePrices = [1.45, 0.69, 5.31, 0.11];
 
 
 var crypotcurrencyRequest = new XMLHttpRequest();
@@ -39,8 +43,8 @@ window.onload = function loadAPI(){
 crypotcurrencyRequest.onload = function(){
 	if(crypotcurrencyRequest.status == 200){
 		cObj = JSON.parse(crypotcurrencyRequest.responseText);
-		forLoop("XRB", "VEN", "DENT", "POE", "ericContent", "e", ericArrayName, ericArrayPrice);
-		forLoop("XRP", "VEN", "ADA", "POE", "riderContent", "r", riderArrayName, riderArrayPrice);
+		forLoop("XRB", "VEN", "DENT", "POE", "ericContent", "e", ericArrayName, ericArrayPrice, ericPurchasePrices);
+		forLoop("XRP", "VEN", "ADA", "POE", "riderContent", "r", riderArrayName, riderArrayPrice, riderPurchasePrices);
 		ericCalculateNumbers();
 		riderCalculateNumbers();
 	}
@@ -52,28 +56,28 @@ function ericCalculateNumbers(){
 		switch(ericArrayName[i]){
 			case "VeChain":
 				var venWorth = ERIC_VEN * ericArrayPrice[i];
-				var venNode = document.createTextNode("Holdings: $" +venWorth.toFixed(2));
+				var venNode = document.createTextNode("Holding: $" +venWorth.toFixed(2));
 				var venHead = document.getElementById("VENe");
 				pNodeCreate(venNode, venHead);
 				totalPrice += venWorth;
 				break;
 			case "Nano":
 				var nanoWorth = ERIC_XRB * ericArrayPrice[i];
-				var nanoNode = document.createTextNode("Holdings: $" +nanoWorth.toFixed(2));
+				var nanoNode = document.createTextNode("Holding: $" +nanoWorth.toFixed(2));
 				var xrbHead = document.getElementById("XRBe");
 				pNodeCreate(nanoNode, xrbHead);
 				totalPrice += nanoWorth;
 				break;
 			case "Dent":
 				var dentWorth = ERIC_DENT * ericArrayPrice[i];
-				var dentNode = document.createTextNode("Holdings: $" +dentWorth.toFixed(2));
+				var dentNode = document.createTextNode("Holding: $" +dentWorth.toFixed(2));
 				var dentHead = document.getElementById("DENTe");
 				pNodeCreate(dentNode, dentHead);
 				totalPrice += dentWorth;
 				break;
 			case "Po.et":
 				var poeWorth = ERIC_POE * ericArrayPrice[i];
-				var poeNode = document.createTextNode("Holdings: $" +poeWorth.toFixed(2));
+				var poeNode = document.createTextNode("Holding: $" +poeWorth.toFixed(2));
 				var poeHead = document.getElementById("POEe");
 				pNodeCreate(poeNode, poeHead);
 				totalPrice += poeWorth;
@@ -108,28 +112,28 @@ function riderCalculateNumbers(){
 		switch(riderArrayName[i]){
 			case "VeChain":
 				var venWorth = RIDER_VEN * riderArrayPrice[i];
-				var venNode = document.createTextNode("Holdings: $" +venWorth.toFixed(2));
+				var venNode = document.createTextNode("Holding: $" +venWorth.toFixed(2));
 				var venHead = document.getElementById("VENr");
 				pNodeCreate(venNode, venHead);
 				totalPrice += venWorth;
 				break;
 			case "Ripple":
 				var nanoWorth = RIDER_XRP * riderArrayPrice[i];
-				var nanoNode = document.createTextNode("Holdings: $" +nanoWorth.toFixed(2));
+				var nanoNode = document.createTextNode("Holding: $" +nanoWorth.toFixed(2));
 				var xrbHead = document.getElementById("XRPr");
 				pNodeCreate(nanoNode, xrbHead);
 				totalPrice += nanoWorth;
 				break;
 			case "Cardano":
 				var dentWorth = RIDER_ADA * riderArrayPrice[i];
-				var dentNode = document.createTextNode("Holdings: $" +dentWorth.toFixed(2));
+				var dentNode = document.createTextNode("Holding: $" +dentWorth.toFixed(2));
 				var dentHead = document.getElementById("ADAr");
 				pNodeCreate(dentNode, dentHead);
 				totalPrice += dentWorth;
 				break;
 			case "Po.et":
 				var poeWorth = RIDER_POE * riderArrayPrice[i];
-				var poeNode = document.createTextNode("Holdings: $" +poeWorth.toFixed(2));
+				var poeNode = document.createTextNode("Holding: $" +poeWorth.toFixed(2));
 				var poeHead = document.getElementById("POEr");
 				pNodeCreate(poeNode, poeHead);
 				totalPrice += poeWorth;
@@ -178,8 +182,9 @@ function pNodeCreateWithClass(nodeText, nodeName, className){
 	nodeName.appendChild(pNode);
 }
 
-function forLoop(sym1, sym2, sym3, sym4, content, letter, arrayName, arrayPrice){
+function forLoop(sym1, sym2, sym3, sym4, content, letter, arrayName, arrayPrice, purchasePrice){
 	arrayCount = 0;
+	var purchasePriceCounter = 0;
 	for (var i = 0; i < cObj.length; i++) {
 			if (cObj[i].symbol == sym1 || cObj[i].symbol == sym2 || cObj[i].symbol == sym3 || cObj[i].symbol == sym4) {
 
@@ -190,19 +195,22 @@ function forLoop(sym1, sym2, sym3, sym4, content, letter, arrayName, arrayPrice)
 				arrayCount++;
 				var nameNode = document.createTextNode(cObj[i].name);
 				var nameTag = document.createElement("H4");
+
+				var purchasePriceNode = document.createTextNode(" Purchased: $"+purchasePrice[purchasePriceCounter]);
+				var purchasePriceTag = document.createElement("p");
 				
-				var priceNode = document.createTextNode(" Current Price: $" +cObj[i].price_usd);
+				var priceNode = document.createTextNode("Current: $" +cObj[i].price_usd);
 				var priceTag = document.createElement("p");
 				priceTag.setAttribute("class", "cryptoPrice");
 
 				var iconTag = document.createElement("i");
-				if(cObj[i].percent_change_1h >= 0){
+				if(cObj[i].price_usd >= purchasePrice[purchasePriceCounter]){
 					iconTag.setAttribute("class", "fas fa-chevron-up gained");
 				}
-				else if(cObj[i].percent_change_1h < 0){
+				else if(cObj[i].price_usd < purchasePrice[purchasePriceCounter]){
 					iconTag.setAttribute("class", "fas fa-chevron-down lossed");
 				}
-
+				purchasePriceCounter++;
 
 				var onPage = document.getElementById(content);
 				var extraDiv = document.createElement("div");
@@ -211,10 +219,12 @@ function forLoop(sym1, sym2, sym3, sym4, content, letter, arrayName, arrayPrice)
 
 
 				nameTag.appendChild(nameNode);
-				priceTag.appendChild(iconTag);
+				purchasePriceTag.appendChild(iconTag);
+				purchasePriceTag.appendChild(purchasePriceNode);
 				priceTag.appendChild(priceNode);
 				extraDiv.appendChild(nameTag);
 				extraDiv.appendChild(priceTag);
+				extraDiv.appendChild(purchasePriceTag);
 				onPage.appendChild(extraDiv);
 			}
 			
