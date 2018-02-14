@@ -12,7 +12,7 @@ var ERIC_DENT = 32358.6963126;
 var ericArrayPrice = [];
 var ericArrayName = [];
 //This is a set order based on total market cap value (may need to be adjusted in the future)- VEN, XRB, DENT, and POE
-var ericPurchasePrices = [5.53, 17.62, 0.05, 0.11];
+var ericPurchasePrices = [5.39, 16.11, 0.04, 0.10];
 
 var arrayCount = 0;
 
