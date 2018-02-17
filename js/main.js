@@ -4,14 +4,14 @@
 
 
 var ERIC_INIT = 5000;
-var ERIC_XRB = 44.69982043;
+var ERIC_NANO = 44.69982043;
 var ERIC_VEN = 132.6867804;
 var ERIC_POE = 7398.3317625;
 var ERIC_DENT = 32358.6963126;
 
 var ericArrayPrice = [];
 var ericArrayName = [];
-//This is a set order based on total market cap value (may need to be adjusted in the future)- VEN, XRB, DENT, and POE
+//This is a set order based on total market cap value (may need to be adjusted in the future)- VEN, NANO, DENT, and POE
 var ericPurchasePrices = [5.39, 16.11, 0.04, 0.10];
 
 var arrayCount = 0;
@@ -43,7 +43,7 @@ window.onload = function loadAPI(){
 crypotcurrencyRequest.onload = function(){
 	if(crypotcurrencyRequest.status == 200){
 		cObj = JSON.parse(crypotcurrencyRequest.responseText);
-		forLoop("XRB", "VEN", "DENT", "POE", "ericContent", "e", ericArrayName, ericArrayPrice, ericPurchasePrices);
+		forLoop("NANO", "VEN", "DENT", "POE", "ericContent", "e", ericArrayName, ericArrayPrice, ericPurchasePrices);
 		forLoop("XRP", "VEN", "ADA", "POE", "riderContent", "r", riderArrayName, riderArrayPrice, riderPurchasePrices);
 		ericCalculateNumbers();
 		riderCalculateNumbers();
@@ -62,10 +62,10 @@ function ericCalculateNumbers(){
 				totalPrice += venWorth;
 				break;
 			case "Nano":
-				var nanoWorth = ERIC_XRB * ericArrayPrice[i];
+				var nanoWorth = ERIC_NANO * ericArrayPrice[i];
 				var nanoNode = document.createTextNode("Holding: $" +nanoWorth.toFixed(2));
-				var xrbHead = document.getElementById("XRBe");
-				pNodeCreate(nanoNode, xrbHead);
+				var NANOHead = document.getElementById("NANOe");
+				pNodeCreate(nanoNode, NANOHead);
 				totalPrice += nanoWorth;
 				break;
 			case "Dent":
@@ -120,8 +120,8 @@ function riderCalculateNumbers(){
 			case "Ripple":
 				var nanoWorth = RIDER_XRP * riderArrayPrice[i];
 				var nanoNode = document.createTextNode("Holding: $" +nanoWorth.toFixed(2));
-				var xrbHead = document.getElementById("XRPr");
-				pNodeCreate(nanoNode, xrbHead);
+				var NANOHead = document.getElementById("XRPr");
+				pNodeCreate(nanoNode, NANOHead);
 				totalPrice += nanoWorth;
 				break;
 			case "Cardano":
