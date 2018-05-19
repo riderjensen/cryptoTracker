@@ -3,16 +3,15 @@
 'use strict';
 
 
-var ERIC_INIT = 5000;
+var ERIC_INIT = 4617.03; //5000 - sold stuff of 382.97
 var ERIC_NANO = 44.69982043;
-var ERIC_VEN = 132.6867804;
-var ERIC_POE = 7398.3317625;
 var ERIC_DENT = 32358.6963126;
+var ERIC_ETH = 0.9137689;
 
 var ericArrayPrice = [];
 var ericArrayName = [];
-//This is a set order based on total market cap value (may need to be adjusted in the future)- VEN, NANO, DENT, and POE
-var ericPurchasePrices = [5.39, 16.11, 0.04, 0.10];
+//This is a set order based on total market cap value (may need to be adjusted in the future)- NANO, DENT, Eth
+var ericPurchasePrices = [784.01, 16.11, 0.04];
 
 var arrayCount = 0;
 
@@ -43,7 +42,7 @@ window.onload = function loadAPI(){
 crypotcurrencyRequest.onload = function(){
 	if(crypotcurrencyRequest.status == 200){
 		cObj = JSON.parse(crypotcurrencyRequest.responseText);
-		forLoop("NANO", "VEN", "DENT", "POE", "ericContent", "e", ericArrayName, ericArrayPrice, ericPurchasePrices);
+		forLoop("NANO", "DENT", "ETH", "", "ericContent", "e", ericArrayName, ericArrayPrice, ericPurchasePrices);
 		forLoop("XRP", "VEN", "ADA", "POE", "riderContent", "r", riderArrayName, riderArrayPrice, riderPurchasePrices);
 		ericCalculateNumbers();
 		riderCalculateNumbers();
@@ -54,13 +53,6 @@ function ericCalculateNumbers(){
 	var totalPrice = 0;
 	for (var i = 0; i < ericArrayName.length; i++) {
 		switch(ericArrayName[i]){
-			case "VeChain":
-				var venWorth = ERIC_VEN * ericArrayPrice[i];
-				var venNode = document.createTextNode("Holding: $" +venWorth.toFixed(2));
-				var venHead = document.getElementById("VENe");
-				pNodeCreate(venNode, venHead);
-				totalPrice += venWorth;
-				break;
 			case "Nano":
 				var nanoWorth = ERIC_NANO * ericArrayPrice[i];
 				var nanoNode = document.createTextNode("Holding: $" +nanoWorth.toFixed(2));
@@ -75,12 +67,12 @@ function ericCalculateNumbers(){
 				pNodeCreate(dentNode, dentHead);
 				totalPrice += dentWorth;
 				break;
-			case "Po.et":
-				var poeWorth = ERIC_POE * ericArrayPrice[i];
-				var poeNode = document.createTextNode("Holding: $" +poeWorth.toFixed(2));
-				var poeHead = document.getElementById("POEe");
-				pNodeCreate(poeNode, poeHead);
-				totalPrice += poeWorth;
+			case "Ethereum":
+				var ethWorth = ERIC_ETH * ericArrayPrice[i];
+				var ethNode = document.createTextNode("Holding: $" +ethWorth.toFixed(2));
+				var ethHead = document.getElementById("ETHe");
+				pNodeCreate(ethNode, ethHead);
+				totalPrice += ethWorth;
 				break;
 			default:
 
