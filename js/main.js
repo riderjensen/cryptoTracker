@@ -10,7 +10,7 @@ var ERIC_ETH = 0.9137689;
 
 var ericArrayPrice = [];
 var ericArrayName = [];
-//This is a set order based on total market cap value (may need to be adjusted in the future)- NANO, DENT, Eth
+//This is a set order based on total market cap value (may need to be adjusted in the future)- ETH, NANO, DENT
 var ericPurchasePrices = [784.01, 16.11, 0.04];
 
 var arrayCount = 0;
@@ -27,12 +27,20 @@ var riderArrayName = [];
 var riderPurchasePrices = [1.45, 0.69, 5.31, 0.11];
 
 
+//sean init amount spent
+var SEAN_INIT = 1000;
+// how much ETH Sean has purchased
+var SEAN_ETH = 2.00;
+// how much the coins are worth when purchased
+var seanPurchasePrices = [475.25];
+var seanArrayName = [];
+var seanArrayPrice = [];
+
 var crypotcurrencyRequest = new XMLHttpRequest();
 var cObj;
 
 window.onload = function loadAPI(){
-	var cryptoAPI = "https://api.coinmarketcap.com/v1/ticker/?convert=USD&limit=200";
-
+	var cryptoAPI = "https://api.coinmarketcap.com/v1/ticker/?convert=USD&limit=300";
 	crypotcurrencyRequest.open("GET", cryptoAPI, true);
 	crypotcurrencyRequest.responseType = 'text';
 	crypotcurrencyRequest.send(null);
@@ -44,8 +52,10 @@ crypotcurrencyRequest.onload = function(){
 		cObj = JSON.parse(crypotcurrencyRequest.responseText);
 		forLoop("NANO", "DENT", "ETH", "", "ericContent", "e", ericArrayName, ericArrayPrice, ericPurchasePrices);
 		forLoop("XRP", "VEN", "ADA", "POE", "riderContent", "r", riderArrayName, riderArrayPrice, riderPurchasePrices);
+		forLoop("ETH", "", "", "", "seanContent", "s", seanArrayName, seanArrayPrice, seanPurchasePrices)
 		ericCalculateNumbers();
 		riderCalculateNumbers();
+		seanCalculateNumbers();
 	}
 };
 
@@ -109,7 +119,7 @@ function riderCalculateNumbers(){
 				pNodeCreate(venNode, venHead);
 				totalPrice += venWorth;
 				break;
-			case "Ripple":
+			case "XRP":
 				var nanoWorth = RIDER_XRP * riderArrayPrice[i];
 				var nanoNode = document.createTextNode("Holding: $" +nanoWorth.toFixed(2));
 				var NANOHead = document.getElementById("XRPr");
@@ -154,6 +164,40 @@ function riderCalculateNumbers(){
 	pNodeCreateWithClass(percentLossNode, lossesHtml, checkLossClass);
 }
 
+function seanCalculateNumbers(){
+	var totalPrice = 0;
+	for (var i = 0; i < seanArrayName.length; i++) {
+		switch(seanArrayName[i]){
+			case "Ethereum":
+				var ethWorth = SEAN_ETH * seanArrayPrice[i];
+				var ethNode = document.createTextNode("Holding: $" +ethWorth.toFixed(2));
+				var ethHead = document.getElementById("ETHs");
+				pNodeCreate(ethNode, ethHead);
+				totalPrice += ethWorth;
+				break;
+			default:
+
+		}
+	}
+	var totalPriceHtml = document.getElementById("seanTotalPrice");
+	var totalPriceNode = document.createTextNode("Total Holdings Worth: $" + totalPrice.toFixed(2));
+	pNodeCreate(totalPriceNode, totalPriceHtml);
+
+	var lossesHtml = document.getElementById("seanLosses");
+	var lossesNode = document.createTextNode("Total Gain/Loss: $" + (totalPrice - SEAN_INIT).toFixed(2));
+	var checkLossClass;
+	if (totalPrice > SEAN_INIT){
+		checkLossClass = true;
+		pNodeCreateWithClass(lossesNode, lossesHtml, checkLossClass);
+	}
+	else{
+		checkLossClass = false;
+		pNodeCreateWithClass(lossesNode, lossesHtml, checkLossClass);
+	}
+
+	var percentLossNode = document.createTextNode("Total Percent Gain/Loss: " + ((((totalPrice - SEAN_INIT)/SEAN_INIT) *100)).toFixed(2) +"%");
+	pNodeCreateWithClass(percentLossNode, lossesHtml, checkLossClass);
+}
 
 
 function pNodeCreate(nodeText, nodeName){
