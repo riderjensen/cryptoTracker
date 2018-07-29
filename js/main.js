@@ -16,15 +16,13 @@ var ericPurchasePrices = [784.01, 16.11, 0.04];
 var arrayCount = 0;
 
 var RIDER_INIT = 1000;
-var RIDER_XRP = 119.776;
-var RIDER_VEN = 32.967;
-var RIDER_ADA = 292.642;
-var RIDER_POE = 1868.13;
+var RIDER_ETH = 0.47197506;
+
 
 var riderArrayPrice = [];
 var riderArrayName = [];
 //This is a set order based on total market cap value (may need to be adjusted in the future)- XRP, ADA, VEN, and POE
-var riderPurchasePrices = [1.45, 0.69, 5.31, 0.11];
+var riderPurchasePrices = [464.40];
 
 
 //sean init amount spent
@@ -51,7 +49,7 @@ crypotcurrencyRequest.onload = function(){
 	if(crypotcurrencyRequest.status == 200){
 		cObj = JSON.parse(crypotcurrencyRequest.responseText);
 		forLoop("NANO", "DENT", "ETH", "", "ericContent", "e", ericArrayName, ericArrayPrice, ericPurchasePrices);
-		forLoop("XRP", "VEN", "ADA", "POE", "riderContent", "r", riderArrayName, riderArrayPrice, riderPurchasePrices);
+		forLoop("ETH", "", "", "", "riderContent", "r", riderArrayName, riderArrayPrice, riderPurchasePrices);
 		forLoop("ETH", "", "", "", "seanContent", "s", seanArrayName, seanArrayPrice, seanPurchasePrices)
 		ericCalculateNumbers();
 		riderCalculateNumbers();
@@ -112,12 +110,12 @@ function riderCalculateNumbers(){
 	var totalPrice = 0;
 	for (var i = 0; i < riderArrayName.length; i++) {
 		switch(riderArrayName[i]){
-			case "VeChain":
-				var venWorth = RIDER_VEN * riderArrayPrice[i];
-				var venNode = document.createTextNode("Holding: $" +venWorth.toFixed(2));
-				var venHead = document.getElementById("VENr");
-				pNodeCreate(venNode, venHead);
-				totalPrice += venWorth;
+			case "Ethereum":
+				var ethWorth = RIDER_ETH * riderArrayPrice[i];
+				var ethNode = document.createTextNode("Holding: $" +ethWorth.toFixed(2));
+				var ethHead = document.getElementById("ETHr");
+				pNodeCreate(ethNode, ethHead);
+				totalPrice += ethWorth;
 				break;
 			case "XRP":
 				var nanoWorth = RIDER_XRP * riderArrayPrice[i];
